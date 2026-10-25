@@ -1,0 +1,114 @@
+=== STUDY HOURS OLS MODEL ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    GPA   R-squared:                       0.539
+Model:                            OLS   Adj. R-squared:                  0.539
+Method:                 Least Squares   F-statistic:                     2340.
+Date:                Mon, 26 Oct 2026   Prob (F-statistic):               0.00
+Time:                        01:39:35   Log-Likelihood:                 354.75
+No. Observations:                2000   AIC:                            -705.5
+Df Residuals:                    1998   BIC:                            -694.3
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+=======================================================================================
+                          coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------------
+const                   1.9642      0.024     81.047      0.000       1.917       2.012
+Study_Hours_Per_Day     0.1541      0.003     48.376      0.000       0.148       0.160
+==============================================================================
+Omnibus:                        0.638   Durbin-Watson:                   2.004
+Prob(Omnibus):                  0.727   Jarque-Bera (JB):                0.552
+Skew:                           0.021   Prob(JB):                        0.759
+Kurtosis:                       3.070   Cond. No.                         41.4
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+=== SLEEP HOURS OLS MODEL ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    GPA   R-squared:                       0.000
+Model:                            OLS   Adj. R-squared:                 -0.000
+Method:                 Least Squares   F-statistic:                   0.03657
+Date:                Mon, 26 Oct 2026   Prob (F-statistic):              0.848
+Time:                        01:39:35   Log-Likelihood:                -420.55
+No. Observations:                2000   AIC:                             845.1
+Df Residuals:                    1998   BIC:                             856.3
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+=======================================================================================
+                          coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------------
+const                   3.1225      0.035     89.337      0.000       3.054       3.191
+Sleep_Hours_Per_Day    -0.0009      0.005     -0.191      0.848      -0.010       0.008
+==============================================================================
+Omnibus:                       17.424   Durbin-Watson:                   1.999
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               11.836
+Skew:                           0.029   Prob(JB):                      0.00269
+Kurtosis:                       2.628   Cond. No.                         40.6
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+=== STRESS LEVEL OLS MODEL ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    GPA   R-squared:                       0.303
+Model:                            OLS   Adj. R-squared:                  0.303
+Method:                 Least Squares   F-statistic:                     868.3
+Date:                Mon, 26 Oct 2026   Prob (F-statistic):          8.73e-159
+Time:                        01:39:35   Log-Likelihood:                -59.693
+No. Observations:                2000   AIC:                             123.4
+Df Residuals:                    1998   BIC:                             134.6
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+================================================================================
+                   coef    std err          t      P>|t|      [0.025      0.975]
+--------------------------------------------------------------------------------
+const            2.5814      0.019    136.001      0.000       2.544       2.619
+Stress_Level     0.2260      0.008     29.467      0.000       0.211       0.241
+==============================================================================
+Omnibus:                       12.619   Durbin-Watson:                   2.037
+Prob(Omnibus):                  0.002   Jarque-Bera (JB):               12.654
+Skew:                          -0.188   Prob(JB):                      0.00179
+Kurtosis:                       3.099   Cond. No.                         9.70
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+=== MULTIVARIABLE OLS MODEL ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    GPA   R-squared:                       0.541
+Model:                            OLS   Adj. R-squared:                  0.540
+Method:                 Least Squares   F-statistic:                     470.0
+Date:                Mon, 26 Oct 2026   Prob (F-statistic):               0.00
+Time:                        01:39:35   Log-Likelihood:                 358.07
+No. Observations:                2000   AIC:                            -704.1
+Df Residuals:                    1994   BIC:                            -670.5
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+===================================================================================================
+                                      coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------------------------
+const                               0.0232      0.000    106.218      0.000       0.023       0.024
+Study_Hours_Per_Day                 0.2370      0.005     47.703      0.000       0.227       0.247
+Sleep_Hours_Per_Day                 0.0781      0.003     28.206      0.000       0.073       0.084
+Physical_Activity_Hours_Per_Day     0.0827      0.002     51.490      0.000       0.080       0.086
+Social_Hours_Per_Day                0.0840      0.003     33.014      0.000       0.079       0.089
+Extracurricular_Hours_Per_Day       0.0752      0.004     19.446      0.000       0.068       0.083
+Stress_Level                        0.0002      0.010      0.020      0.984      -0.020       0.021
+==============================================================================
+Omnibus:                        0.939   Durbin-Watson:                   2.006
+Prob(Omnibus):                  0.625   Jarque-Bera (JB):                0.850
+Skew:                           0.028   Prob(JB):                        0.654
+Kurtosis:                       3.084   Cond. No.                     1.45e+15
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The smallest eigenvalue is 1.43e-25. This might indicate that there are
+strong multicollinearity problems or that the design matrix is singular.
