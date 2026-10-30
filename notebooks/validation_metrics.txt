@@ -1,0 +1,34 @@
+Observations used: 2000
+
+=== MODEL COMPARISONS ===
+Base Model (Study, Sleep) vs Full Multivariable Model
+
+Base Model AIC: -705.99
+Full Model AIC: -704.13 (lower is better)
+
+Base Model BIC: -689.18
+Full Model BIC: -670.53 (lower is better)
+
+Base Model Adj R-squared: 0.5396
+Full Model Adj R-squared: 0.5398 (higher is better)
+
+Nested F-test (Full vs Base): F = 1.38, p = 0.247, df diff = 3
+
+=== MEDIATION ANALYSIS: Sleep -> Stress -> GPA ===
+
+Path A (Sleep -> Stress):                  -0.1489
+Path B (Stress -> GPA, controlling Sleep): 0.2475
+Direct Effect  (c', Sleep -> GPA | Stress): 0.0360
+Indirect Effect (a*b):                      -0.0368
+Total Effect   (c, Sleep -> GPA alone):     -0.0009
+Check: direct + indirect = -0.0009
+
+Bootstrap 95% CI for indirect effect (2000 resamples): [-0.0423, -0.0317]
+Sobel test: z = -12.791, p = 1.85e-37
+Indirect effect is significant if the bootstrap CI excludes 0.
+
+Interpretation:
+- Lower AIC/BIC, higher Adj R-squared and a significant F-test mean the extra lifestyle factors improve the model.
+- The indirect effect is how much of Sleep's impact on GPA operates through Stress.
+- Full-model hour coefficients are relative to the dropped Social_Hours_Per_Day (the 5 hour columns sum to 24).
+- Stress_Level is coded Low=1, Moderate=2, High=3 (ordinal treated as numeric).
