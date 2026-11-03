@@ -1,0 +1,53 @@
+Observations: 2000
+Social hours is the reference (the five hour columns sum to 24).
+
+=== H1: study and sleep both significantly positive? ===
+Study  (alone):    b = +0.1541, p = <1e-16
+Sleep  (alone):    b = -0.0009, p = 0.848
+Study  (| sleep):  b = +0.1542, p = <1e-16
+Sleep  (| study):  b = -0.0049, p = 0.115
+Verdict: NOT SUPPORTED (study yes, sleep no)
+
+=== H2: do social time / low physical activity hurt GPA once study is controlled? ===
+Phys    unadjusted: b = -0.0405 (p = <1e-16)   | adjusted for study: b = +0.0027 (p = 0.19)
+Social  unadjusted: b = -0.0152 (p = 0.000125)   | adjusted for study: b = +0.0028 (p = 0.301)
+Joint F-test (Phys + Social | Study): F = 3.14, p = 0.0434; b_phys = +0.0057, b_social = +0.0070
+Verdict: NOT SUPPORTED - the raw negative association of physical activity (r = -0.34) is explained by study hours. After adjustment the effects are ~0 and, where the joint test is borderline significant, of the OPPOSITE sign and < 0.01 GPA per hour.
+
+=== H3: Study x Sleep interaction ===
+Interaction coefficient = +0.0040, p = 0.0722; F-test vs additive model p = 0.0722
+Adj R2: additive 0.5396 -> interaction 0.5401
+Low-sleep (<6 h, n = 402) version: LowSleep b = +0.0016 (p = 0.98), Study:LowSleep b = +0.0013 (p = 0.877)
+  marginal effect of 1 h study at sleep =    5: +0.1440
+  marginal effect of 1 h study at sleep =  7.5: +0.1539
+  marginal effect of 1 h study at sleep =   10: +0.1638
+Verdict: NOT SUPPORTED at the 5% level (borderline, tiny effect)
+
+=== H4: full multi-factor model vs study hours alone ===
+                         R2  adj_R2       AIC       BIC  n_params
+M1 Study only        0.5394  0.5392 -705.5010 -694.2992       2.0
+M4 Study + Sleep     0.5400  0.5396 -705.9851 -689.1824       3.0
+M5 Study x Sleep     0.5408  0.5401 -707.2236 -684.8200       4.0
+M6 Full (no social)  0.5410  0.5398 -704.1325 -670.5271       6.0
+
+Nested F-test, full vs study-only: F = 1.66, p = 0.158, df diff = 4
+Nested F-test, study+sleep vs study-only: F = 2.48, p = 0.115
+Repeated 5-fold CV (20 repeats):
+                     cv_R2_mean  cv_R2_sd  cv_RMSE_mean  cv_RMSE_sd
+M1 Study only            0.5370    0.0311        0.2027      0.0066
+M4 Study + Sleep         0.5371    0.0311        0.2027      0.0066
+M6 Full (no social)      0.5365    0.0313        0.2028      0.0066
+Verdict: NOT SUPPORTED - extra variables add nothing beyond study hours
+
+=== Relative importance (share of the full model's R2) ===
+        LMG_R2  LMG_pct  drop_one_dR2
+Study   0.3385  62.5745        0.1675
+Sleep   0.0061   1.1243        0.0005
+Phys    0.0527   9.7348        0.0001
+Extra   0.0050   0.9169        0.0009
+Stress  0.1388  25.6495        0.0000
+
+Notes:
+- Stress_Level is coded Low=1, Moderate=2, High=3 (ordinal treated as numeric; dummy coding gives the same conclusions).
+- Observational data: all associations, not causal effects.
+- Screen time is not in the dataset, so the screen-time hypotheses could not be tested.

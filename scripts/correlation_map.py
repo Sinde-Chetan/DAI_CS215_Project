@@ -1,50 +1,29 @@
-import matplotlib.pyplot as plt
+"""Step 2a - Correlation heatmap (Pearson + Spearman) of all numeric variables."""
 import pandas as pd
 import seaborn as sns
-from pathlib import Path
 
-# Define paths
-BASE_DIR = Path(__file__).resolve().parent.parent
-INPUT_FILE = BASE_DIR / "data" / "cleaned_student_data.csv"
-OUTPUT_FILE = BASE_DIR / "notebooks" / "correlation_heatmap.png"
+from utils import HOUR_COLS, SHORT, load_clean, savefig, setup_style, RESULTS_DIR
 
-# Load cleaned data
-df = pd.read_csv(INPUT_FILE)
+COLUMNS = ["GPA", *HOUR_COLS, "Stress_Level_Num"]
 
-# Summary Statistics
-print("Summary Statistics:")
-print(df.describe())
 
-# Select numerical columns
-columns = [
-    "GPA",
-    "Sleep_Hours_Per_Day",
-    "Study_Hours_Per_Day",
-    "Social_Hours_Per_Day",
-    "Physical_Activity_Hours_Per_Day",
-]
+def main():
+    plt = setup_style()
+    df = load_clean()
+    pearson = df[COLUMNS].corr(method="pearson").rename(index=SHORT, columns=SHORT)
+    spearman = df[COLUMNS].corr(method="spearman").rename(index=SHORT, columns=SHORT)
+    pearson.round(3).to_csv(RESULTS_DIR / "correlation_matrix_pearson.csv")
 
-# Correlation Matrix
-correlation = df[columns].corr()
+    fig, axes = plt.subplots(1, 2, figsize=(16, 6.5))
+    for ax, mat, name in zip(axes, [pearson, spearman], ["Pearson", "Spearman"]):
+        sns.heatmap(mat, annot=True, fmt=".2f", cmap="coolwarm", vmin=-1, vmax=1,
+                    center=0, square=True, cbar=False, ax=ax)
+        ax.set_title(f"{name} correlation")
+        ax.grid(False)
+    fig.suptitle("Correlation matrix: lifestyle factors and GPA", fontweight="bold")
+    savefig(plt, "correlation_heatmap.png")
+    print(pearson["GPA"].drop("GPA").sort_values().round(3).to_string())
 
-plt.figure(figsize=(10, 8))
 
-sns.heatmap(
-    correlation,
-    annot=True,
-    cmap="coolwarm",
-    fmt=".2f",
-    vmin=-1,
-    vmax=1,
-    center=0,
-)
-
-plt.title("Correlation Matrix: Lifestyle Factors & GPA")
-plt.tight_layout()
-
-# Save heatmap
-OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-plt.savefig(OUTPUT_FILE, dpi=300, bbox_inches="tight")
-plt.show()
-
-print(f"\nHeatmap saved to: {OUTPUT_FILE}")
+if __name__ == "__main__":
+    main()

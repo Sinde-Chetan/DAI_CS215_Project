@@ -1,113 +1,87 @@
+"""Step 1 - Data cleaning (owner: Chetan).
+
+raw_student_data.csv  ->  cleaned_student_data.csv
+
+* strips/validates column names, drops empty rows and exact duplicates
+* coerces numeric columns, fills any missing value (median / mode)
+* standardises Stress_Level text (Low / Moderate / High) and adds the numeric
+  code Stress_Level_Num (1/2/3)
+* validates value ranges and the "hours add up to 24" structure
+* writes a short log to results/preprocessing_log.txt
+"""
 from pathlib import Path
+
 import pandas as pd
 
+from utils import HOUR_COLS, RAW_FILE, CLEAN_FILE, RESULTS_DIR, STRESS_MAP, encode_stress
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-INPUT_FILE = BASE_DIR / "data" / "raw_student_data.csv"
-OUTPUT_FILE = BASE_DIR / "data" / "cleaned_student_data.csv"
+REQUIRED = ["Student_ID", *HOUR_COLS, "GPA", "Stress_Level"]
+NUMERIC = [*HOUR_COLS, "GPA"]
 
 
-def clean_student_data(input_file=INPUT_FILE, output_file=OUTPUT_FILE):
-    input_file = Path(input_file)
-    output_file = Path(output_file)
-
+def clean_student_data(input_file=RAW_FILE, output_file=CLEAN_FILE):
+    input_file, output_file = Path(input_file), Path(output_file)
     if not input_file.exists():
         raise FileNotFoundError(f"Input CSV not found: {input_file}")
 
+    log = []
     df = pd.read_csv(input_file, encoding="utf-8-sig")
-
-    # Clean column names
     df.columns = df.columns.astype(str).str.strip()
+    missing_cols = [c for c in REQUIRED if c not in df.columns]
+    if missing_cols:
+        raise ValueError(f"Missing columns: {missing_cols}; found {df.columns.tolist()}")
+    log.append(f"Rows read: {len(df)}")
 
-    # Check that all expected columns exist
-    required_columns = [
-        "Student_ID",
-        "Study_Hours_Per_Day",
-        "Extracurricular_Hours_Per_Day",
-        "Sleep_Hours_Per_Day",
-        "Social_Hours_Per_Day",
-        "Physical_Activity_Hours_Per_Day",
-        "GPA",
-        "Stress_Level",
-    ]
+    n = len(df)
+    df = df.dropna(how="all")
+    log.append(f"Completely empty rows removed: {n - len(df)}")
+    n = len(df)
+    df = df.drop_duplicates()
+    log.append(f"Exact duplicate rows removed: {n - len(df)}")
+    n = len(df)
+    df = df.drop_duplicates(subset="Student_ID")
+    log.append(f"Duplicate Student_IDs removed: {n - len(df)}")
 
-    missing_columns = [
-        column for column in required_columns
-        if column not in df.columns
-    ]
+    # numeric columns: coerce, then median-impute (only if something is missing)
+    for col in NUMERIC:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+        n_missing = int(df[col].isna().sum())
+        if n_missing:
+            df[col] = df[col].fillna(df[col].median())
+        log.append(f"{col}: {n_missing} missing -> median imputed")
 
-    if missing_columns:
-        raise ValueError(
-            f"Missing columns in the input CSV: {missing_columns}\n"
-            f"Available columns: {df.columns.tolist()}"
-        )
+    # categorical stress level: blank -> NaN -> mode, then standardise labels
+    df["Stress_Level"] = df["Stress_Level"].replace(r"^\s*$", pd.NA, regex=True)
+    n_missing = int(df["Stress_Level"].isna().sum())
+    if n_missing:
+        df["Stress_Level"] = df["Stress_Level"].fillna(df["Stress_Level"].mode().iloc[0])
+    log.append(f"Stress_Level: {n_missing} missing -> mode imputed")
+    df["Stress_Level"] = df["Stress_Level"].astype(str).str.strip().str.capitalize()
+    df["Stress_Level"] = df["Stress_Level"].replace({"Medium": "Moderate"})
+    df["Stress_Level_Num"] = encode_stress(df["Stress_Level"])
 
-    # Remove completely empty rows
-    df.dropna(how="all", inplace=True)
+    # validation (reported, not silently "fixed")
+    problems = []
+    if not df["GPA"].between(0, 4).all():
+        problems.append("GPA outside 0-4")
+    if (df[HOUR_COLS] < 0).any().any():
+        problems.append("negative hours")
+    if (df[HOUR_COLS].sum(axis=1) > 24 + 1e-6).any():
+        problems.append("daily hours > 24")
+    log.append("Range checks: " + ("; ".join(problems) if problems else "all passed"))
+    sums_to_24 = bool(((df[HOUR_COLS].sum(axis=1) - 24).abs() < 1e-6).all())
+    log.append(f"All five hour columns sum to exactly 24 h: {sums_to_24} "
+               "(=> perfect collinearity; Social hours is dropped from regressions)")
+    log.append("Screen-time column present: " + str(any("screen" in c.lower() for c in df.columns)))
+    log.append(f"Final rows: {len(df)}, columns: {len(df.columns)}")
 
-    # Remove exact duplicate records
-    df.drop_duplicates(inplace=True)
-
-    # Convert numerical columns to numeric values
-    numeric_columns = [
-        "Study_Hours_Per_Day",
-        "Extracurricular_Hours_Per_Day",
-        "Sleep_Hours_Per_Day",
-        "Social_Hours_Per_Day",
-        "Physical_Activity_Hours_Per_Day",
-        "GPA",
-    ]
-
-    for column in numeric_columns:
-        df[column] = pd.to_numeric(df[column], errors="coerce")
-
-        # Replace missing values with the column median,
-        # provided that at least one valid value exists.
-        median_value = df[column].median()
-
-        if pd.notna(median_value):
-            df[column] = df[column].fillna(median_value)
-
-    # Handle missing stress levels
-    df["Stress_Level"] = df["Stress_Level"].replace(
-        r"^\s*$", pd.NA, regex=True
-    )
-
-    stress_mode = df["Stress_Level"].mode()
-
-    if not stress_mode.empty:
-        df["Stress_Level"] = df["Stress_Level"].fillna(
-            stress_mode.iloc[0]
-        )
-
-    # Create the output directory if it does not exist
     output_file.parent.mkdir(parents=True, exist_ok=True)
-
-    # Save the cleaned dataset
     df.to_csv(output_file, index=False)
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    (RESULTS_DIR / "preprocessing_log.txt").write_text("\n".join(log) + "\n", encoding="utf-8")
 
-    # Display the results
-    print("Data preprocessing completed successfully!")
-    print(f"\nInput file: {input_file}")
-    print(f"Output file: {output_file}")
-    print(f"Number of rows: {len(df)}")
-    print(f"Number of columns: {len(df.columns)}")
-
-    print("\nColumn names:")
-    print(df.columns.tolist())
-
-    print("\nMissing values after preprocessing:")
-    print(df.isnull().sum())
-
-    if df.isnull().values.any():
-        print(
-            "\nWarning: Some missing values remain. "
-            "Check columns containing entirely invalid or missing data."
-        )
-    else:
-        print("\nNo missing values remain.")
-
+    print("\n".join(log))
+    print(f"Saved cleaned data to {output_file}")
     return df
 
 

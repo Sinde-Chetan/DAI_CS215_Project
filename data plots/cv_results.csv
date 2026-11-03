@@ -1,0 +1,4 @@
+,cv_R2_mean,cv_R2_sd,cv_RMSE_mean,cv_RMSE_sd
+M1 Study only,0.53696,0.03106,0.20274,0.00655
+M4 Study + Sleep,0.53709,0.03111,0.20271,0.00656
+M6 Full (no social),0.5365,0.03126,0.20284,0.00663

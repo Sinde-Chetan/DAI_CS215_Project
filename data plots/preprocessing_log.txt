@@ -1,0 +1,15 @@
+Rows read: 2000
+Completely empty rows removed: 0
+Exact duplicate rows removed: 0
+Duplicate Student_IDs removed: 0
+Study_Hours_Per_Day: 0 missing -> median imputed
+Sleep_Hours_Per_Day: 0 missing -> median imputed
+Physical_Activity_Hours_Per_Day: 0 missing -> median imputed
+Social_Hours_Per_Day: 0 missing -> median imputed
+Extracurricular_Hours_Per_Day: 0 missing -> median imputed
+GPA: 0 missing -> median imputed
+Stress_Level: 0 missing -> mode imputed
+Range checks: all passed
+All five hour columns sum to exactly 24 h: True (=> perfect collinearity; Social hours is dropped from regressions)
+Screen-time column present: False
+Final rows: 2000, columns: 9

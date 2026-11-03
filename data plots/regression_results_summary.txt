@@ -1,0 +1,174 @@
+=== M1 Study only ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    GPA   R-squared:                       0.539
+Model:                            OLS   Adj. R-squared:                  0.539
+Method:                 Least Squares   F-statistic:                     2340.
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):               0.00
+Time:                        16:02:21   Log-Likelihood:                 354.75
+No. Observations:                2000   AIC:                            -705.5
+Df Residuals:                    1998   BIC:                            -694.3
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      1.9642      0.024     81.047      0.000       1.917       2.012
+Study          0.1541      0.003     48.376      0.000       0.148       0.160
+==============================================================================
+Omnibus:                        0.638   Durbin-Watson:                   2.004
+Prob(Omnibus):                  0.727   Jarque-Bera (JB):                0.552
+Skew:                           0.021   Prob(JB):                        0.759
+Kurtosis:                       3.070   Cond. No.                         41.4
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+=== M2 Sleep only ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    GPA   R-squared:                       0.000
+Model:                            OLS   Adj. R-squared:                 -0.000
+Method:                 Least Squares   F-statistic:                   0.03657
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):              0.848
+Time:                        16:02:21   Log-Likelihood:                -420.55
+No. Observations:                2000   AIC:                             845.1
+Df Residuals:                    1998   BIC:                             856.3
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      3.1225      0.035     89.337      0.000       3.054       3.191
+Sleep         -0.0009      0.005     -0.191      0.848      -0.010       0.008
+==============================================================================
+Omnibus:                       17.424   Durbin-Watson:                   1.999
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               11.836
+Skew:                           0.029   Prob(JB):                      0.00269
+Kurtosis:                       2.628   Cond. No.                         40.6
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+=== M3 Stress only ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    GPA   R-squared:                       0.303
+Model:                            OLS   Adj. R-squared:                  0.303
+Method:                 Least Squares   F-statistic:                     868.3
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):          8.73e-159
+Time:                        16:02:21   Log-Likelihood:                -59.693
+No. Observations:                2000   AIC:                             123.4
+Df Residuals:                    1998   BIC:                             134.6
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      2.5814      0.019    136.001      0.000       2.544       2.619
+Stress         0.2260      0.008     29.467      0.000       0.211       0.241
+==============================================================================
+Omnibus:                       12.619   Durbin-Watson:                   2.037
+Prob(Omnibus):                  0.002   Jarque-Bera (JB):               12.654
+Skew:                          -0.188   Prob(JB):                      0.00179
+Kurtosis:                       3.099   Cond. No.                         9.70
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+=== M4 Study + Sleep ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    GPA   R-squared:                       0.540
+Model:                            OLS   Adj. R-squared:                  0.540
+Method:                 Least Squares   F-statistic:                     1172.
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):               0.00
+Time:                        16:02:21   Log-Likelihood:                 355.99
+No. Observations:                2000   AIC:                            -706.0
+Df Residuals:                    1997   BIC:                            -689.2
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      1.9999      0.033     60.305      0.000       1.935       2.065
+Study          0.1542      0.003     48.419      0.000       0.148       0.160
+Sleep         -0.0049      0.003     -1.575      0.115      -0.011       0.001
+==============================================================================
+Omnibus:                        0.901   Durbin-Watson:                   2.002
+Prob(Omnibus):                  0.637   Jarque-Bera (JB):                0.813
+Skew:                           0.025   Prob(JB):                        0.666
+Kurtosis:                       3.085   Cond. No.                         78.9
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+=== M5 Study x Sleep ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    GPA   R-squared:                       0.541
+Model:                            OLS   Adj. R-squared:                  0.540
+Method:                 Least Squares   F-statistic:                     783.4
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):               0.00
+Time:                        16:02:21   Log-Likelihood:                 357.61
+No. Observations:                2000   AIC:                            -707.2
+Df Residuals:                    1996   BIC:                            -684.8
+Df Model:                           3                                         
+Covariance Type:            nonrobust                                         
+===============================================================================
+                  coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept       2.2232      0.128     17.302      0.000       1.971       2.475
+Study           0.1242      0.017      7.305      0.000       0.091       0.158
+Sleep          -0.0344      0.017     -2.060      0.040      -0.067      -0.002
+Study:Sleep     0.0040      0.002      1.799      0.072      -0.000       0.008
+==============================================================================
+Omnibus:                        1.003   Durbin-Watson:                   2.004
+Prob(Omnibus):                  0.606   Jarque-Bera (JB):                0.916
+Skew:                           0.027   Prob(JB):                        0.633
+Kurtosis:                       3.090   Cond. No.                     1.71e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.71e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+
+=== M6 Full (Social = reference) ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    GPA   R-squared:                       0.541
+Model:                            OLS   Adj. R-squared:                  0.540
+Method:                 Least Squares   F-statistic:                     470.0
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):               0.00
+Time:                        16:02:21   Log-Likelihood:                 358.07
+No. Observations:                2000   AIC:                            -704.1
+Df Residuals:                    1994   BIC:                            -670.5
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      2.0387      0.061     33.343      0.000       1.919       2.159
+Study          0.1530      0.006     26.977      0.000       0.142       0.164
+Sleep         -0.0058      0.004     -1.414      0.157      -0.014       0.002
+Phys          -0.0013      0.003     -0.471      0.638      -0.007       0.004
+Extra         -0.0088      0.005     -1.953      0.051      -0.018    3.49e-05
+Stress         0.0002      0.010      0.020      0.984      -0.020       0.021
+==============================================================================
+Omnibus:                        0.939   Durbin-Watson:                   2.006
+Prob(Omnibus):                  0.625   Jarque-Bera (JB):                0.850
+Skew:                           0.028   Prob(JB):                        0.654
+Kurtosis:                       3.084   Cond. No.                         162.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+Note: the five *_Hours_Per_Day columns sum to 24, so Social hours is the
+dropped reference; hour coefficients = effect of moving one hour FROM social
+time TO that activity. Stress is the ordinal code Low=1, Moderate=2, High=3.
