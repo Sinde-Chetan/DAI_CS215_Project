@@ -12,7 +12,7 @@ matplotlib.use("Agg")  # headless-safe: figures are saved to disk, never shown
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
-RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR = BASE_DIR / "data plots"
 RAW_FILE = DATA_DIR / "raw_student_data.csv"
 CLEAN_FILE = DATA_DIR / "cleaned_student_data.csv"
 

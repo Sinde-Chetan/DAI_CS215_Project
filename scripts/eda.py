@@ -72,5 +72,34 @@ def main():
     savefig(plt, "gpa_vs_each_factor.png")
 
 
+    fig1, axes1 = plt.subplots(2, 3, figsize=(15, 8))
+    flag = 0
+    bold = 1
+    for ax, col in zip(axes1.ravel(), [*HOUR_COLS, "Stress_Level_Num"]):
+        x = df[col] + (np.random.default_rng(0).uniform(-.08, .08, len(df))
+                       if col == "Stress_Level_Num" else 0)
+        if flag == 0:
+            ax.scatter(x, df["GPA"], s=8, alpha=.6, color="#2eab52")
+            flag = 1
+            for spine in ax.spines.values():
+                spine.set_linewidth(3.0)  
+            ax.tick_params(width=3.0, length=6)  
+        else:
+            ax.scatter(x, df["GPA"], s=8, alpha=.3, color="#2e86ab")
+        slope, icpt = np.polyfit(df[col], df["GPA"], 1)
+        xs = np.array([df[col].min(), df[col].max()])
+        ax.plot(xs, icpt + slope * xs, color="#e74c3c", lw=2.2)
+        r = df[col].corr(df["GPA"])
+        if bold == 1:
+            ax.set_title(f"{SHORT[col]}  (r = {r:+.2f})", fontweight="bold"); ax.set_ylabel("GPA", fontweight="bold")
+            bold = 0
+        else:
+            ax.set_title(f"{SHORT[col]}  (r = {r:+.2f})"); ax.set_ylabel("GPA")
+    fig.suptitle("Simple (unadjusted) relationship of each factor with GPA", fontweight="bold")
+    savefig(plt, "gpa_vs_each_factor_highlighted.png")
+
+
+
+
 if __name__ == "__main__":
     main()
