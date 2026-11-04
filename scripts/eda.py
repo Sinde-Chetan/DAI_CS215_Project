@@ -1,5 +1,4 @@
-"""Step 2b - Exploratory data analysis (owner: Chetan).
-
+""" Exploratory data analysis.
 Outputs (results/): eda_summary.txt, summary_statistics.csv,
 distributions.png, gpa_by_stress.png, gpa_vs_each_factor.png
 """
@@ -32,7 +31,6 @@ def main():
     (RESULTS_DIR / "eda_summary.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))
 
-    # 1. distributions
     fig, axes = plt.subplots(2, 4, figsize=(16, 7))
     for ax, col in zip(axes.ravel(), ["GPA", *HOUR_COLS]):
         ax.hist(df[col], bins=25, color="#2e86ab", edgecolor="white")
@@ -45,7 +43,7 @@ def main():
     fig.suptitle("Distributions of all variables", fontweight="bold")
     savefig(plt, "distributions.png")
 
-    # 2. GPA and study hours by stress level
+
     order = ["Low", "Moderate", "High"]
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.5))
     for ax, col in zip(axes, ["GPA", "Study_Hours_Per_Day"]):
@@ -57,7 +55,7 @@ def main():
         ax.set_title(f"{SHORT[col]} by stress level"); ax.set_xlabel("Stress level")
     savefig(plt, "gpa_by_stress.png")
 
-    # 3. GPA against each factor, with OLS line
+    
     fig, axes = plt.subplots(2, 3, figsize=(15, 8))
     for ax, col in zip(axes.ravel(), [*HOUR_COLS, "Stress_Level_Num"]):
         x = df[col] + (np.random.default_rng(0).uniform(-.08, .08, len(df))
