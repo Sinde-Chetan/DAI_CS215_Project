@@ -31,8 +31,9 @@ How do daily study hours, sleep, physical activity, social time, extracurricular
 .
 ├── data/          # raw and cleaned student lifestyle CSVs
 ├── notebooks/     # executed analysis notebook
+├── data plots/    # all the plots showing relation between lifestyle factors and GPA 
 ├── scripts/       # preprocessing, EDA, modelling and plotting scripts
-├── statement.pdf  # original project statement (includes screen-time hypotheses, later revised)
+├── statement.pdf  # original project statement
 └── .gitignore
 ```
 
