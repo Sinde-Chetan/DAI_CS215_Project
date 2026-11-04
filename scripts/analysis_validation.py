@@ -1,20 +1,4 @@
-"""Step 4 - Hypothesis tests and model comparison (owner: Rishanth).
-
-Hypotheses (see README / report - screen time is NOT in the dataset, so the
-screen-time hypotheses of the first proposal cannot be tested; they are replaced
-by hypotheses on the variables that exist):
-
-  H0  no predictor is related to GPA
-  H1  study hours AND sleep hours both have a significant positive relation with GPA
-  H2  more social/leisure time and less physical activity lower GPA, after
-      controlling for study hours  (replaces the screen-time hypothesis)
-  H3  Study x Sleep interaction: adequate sleep amplifies the effect of study time
-      (also a "low sleep (<6 h)" version of the original H3)
-  H4  full multi-factor model predicts GPA better than study hours alone
-
-Outputs: results/validation_metrics.txt, results/hypothesis_results.json,
-results/model_comparison.csv, results/relative_importance.csv,
-results/cv_results.csv
+"""Step 4 - Hypothesis tests and model comparison.
 """
 import itertools
 import json
@@ -33,7 +17,6 @@ SEED, ALPHA = 42, 0.05
 
 
 def pf(p):
-    """Format a p-value (avoid printing a bare 0)."""
     return "<1e-16" if p < 1e-16 else f"{p:.3g}"
 
 
@@ -53,7 +36,6 @@ def ols_coefs(X, y):
 
 
 def lmg(df, y, predictors):
-    """Shapley/LMG decomposition of R^2: average gain in R^2 over all orderings."""
     r2 = {(): 0.0}
     for k in range(1, len(predictors) + 1):
         for S in itertools.combinations(predictors, k):
