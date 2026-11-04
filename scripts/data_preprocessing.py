@@ -1,13 +1,5 @@
-"""Step 1 - Data cleaning (owner: Chetan).
-
+""" Data cleaning.
 raw_student_data.csv  ->  cleaned_student_data.csv
-
-* strips/validates column names, drops empty rows and exact duplicates
-* coerces numeric columns, fills any missing value (median / mode)
-* standardises Stress_Level text (Low / Moderate / High) and adds the numeric
-  code Stress_Level_Num (1/2/3)
-* validates value ranges and the "hours add up to 24" structure
-* writes a short log to results/preprocessing_log.txt
 """
 from pathlib import Path
 
