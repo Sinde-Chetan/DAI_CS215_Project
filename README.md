@@ -12,7 +12,7 @@ How do daily study hours, sleep, physical activity, social time, extracurricular
 | **H2** More social time / less physical activity lowers GPA (controlling for study) | **Not supported.** Raw associations vanish once study hours are controlled. |
 | **H3** Study × Sleep interaction | **Not supported at 5%** (coef = +0.004, p = 0.072; adj. R² rises by only 0.0005). |
 | **H4** Multi-factor model beats study hours alone | **Not supported.** Nested F-test p = 0.158; cross-validated R² is 0.537 for both. |
-| **H5** Stress mediates sleep → GPA | **No mediation.** The naive indirect effect (−0.037) is confounding by study hours; with study controlled it is zero. |
+
 
 **Bottom line:** study hours are the story. Everything else is either unrelated to GPA or a by-product of study time (e.g. stress is largely a function of study load).
 
@@ -20,7 +20,7 @@ How do daily study hours, sleep, physical activity, social time, extracurricular
 
 ## Data
 
-- **Source:** Kaggle *Student Lifestyle Dataset* (licence and access terms to be verified before redistribution).
+- **Source:** Kaggle *Student Lifestyle Dataset*
 - **Size:** 2,000 students × 8 columns: student ID, study hours, extracurricular hours, sleep hours, social hours, physical-activity hours, GPA (2.24–4.00) and stress level (Low / Moderate / High).
 - **Cleaning:** the data had no missing values, duplicates or out-of-range entries. The pipeline standardises stress labels, adds a numeric stress code (Low = 1, Moderate = 2, High = 3) and validates ranges.
 - **Structural quirk:** the five hours variables sum to exactly 24 for every student, so they are perfectly collinear with the intercept. All regressions drop one (social hours is the reference), so a coefficient means "one more hour of this activity *instead of* social time".
@@ -64,14 +64,12 @@ Or open the executed notebook in `notebooks/` with Jupyter.
 - **Models:** ordinary least squares: study only (M1), study + sleep (M4), study × sleep (M5), full model without social hours (M6).
 - **Model comparison:** adjusted R², AIC, BIC, repeated 5-fold cross-validated R², nested F-test.
 - **Predictor importance:** standardised coefficients and LMG variance decomposition.
-- **Mediation:** bootstrap indirect effect (sleep → stress → GPA), with and without study hours as a covariate.
-- **Diagnostics:** VIF (all < 3.2), Breusch–Pagan, Shapiro–Wilk, RESET, Durbin–Watson, Cook's distance, HC3 robust standard errors.
+
 
 ## Limitations
 
-- **Screen time was not measured**, so the original research question cannot be answered with this dataset.
+- **Screen time was not measured**, so the original research question was not answered with this dataset.
 - **Sleep quality and timing are not recorded**, and the sleep range is narrow (5–10 h). The absence of an association does not mean sleep is unimportant.
-- **The data look synthetic** (clean linear normal residuals, hours summing exactly to 24, a GPA at the ceiling). Conclusions describe this dataset, not necessarily real students.
 - **Association, not causation.** Stress in particular is plausibly a consequence of study load rather than a cause of GPA.
 
 ## Team
