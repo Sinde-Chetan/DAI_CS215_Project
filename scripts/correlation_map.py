@@ -1,4 +1,4 @@
-"""Step 2a - Correlation heatmap (Pearson + Spearman) of all numeric variables."""
+""" Correlation heatmap (Pearson + Spearman) of all numeric variables."""
 import pandas as pd
 import seaborn as sns
 
