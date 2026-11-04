@@ -48,7 +48,7 @@ def main():
     full = models["M6 Full (Social = reference)"]
     assert np.linalg.matrix_rank(full.model.exog) == full.model.exog.shape[1], "singular design!"
 
-    # ---- text summary + tidy coefficient table
+    
     with open(RESULTS_DIR / "regression_results_summary.txt", "w", encoding="utf-8") as f:
         for name, m in models.items():
             f.write(f"=== {name} ===\n{m.summary().as_text()}\n\n")
@@ -68,12 +68,12 @@ def main():
                         for n, m in models.items()}).T.round(4).to_string())
     print("\nFull model coefficients:\n", full.summary().tables[1])
 
-    # ---- stand-alone plots
+
     scatter_with_fit(plt, df, "Study", models["M1 Study only"], "#2980b9", "study_vs_gpa_model.png")
     scatter_with_fit(plt, df, "Sleep", models["M2 Sleep only"], "#d35400", "sleep_vs_gpa_model.png")
     scatter_with_fit(plt, df, "Stress", models["M3 Stress only"], "#196f3d", "stress_vs_gpa_model.png")
 
-    # ---- coefficient plot with 95% CI (full model)
+    
     labels = {"Study": "Study", "Sleep": "Sleep", "Phys": "Physical activity",
               "Extra": "Extracurricular", "Stress": "Stress (per level)"}
     par = full.params.drop("Intercept"); ci = full.conf_int().drop("Intercept")
@@ -87,7 +87,7 @@ def main():
     ax.set_title("Full model: coefficients with 95% CI", fontweight="bold")
     savefig(plt, "regression_coefficients.png")
 
-    # ---- standardised coefficients (relative importance)
+
     cols = ["Study", "Sleep", "Phys", "Extra", "Stress"]
     z = (df[cols + ["GPA"]] - df[cols + ["GPA"]].mean()) / df[cols + ["GPA"]].std()
     zm = sm.OLS(z["GPA"], sm.add_constant(z[cols])).fit()
