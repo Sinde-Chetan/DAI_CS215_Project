@@ -1,14 +1,11 @@
 """Shared helpers: paths, data loading and plotting style.
-
-All scripts import from here so that paths work no matter which directory
-they are launched from (no more hard-coded '../data/...').
 """
 from pathlib import Path
 
 import matplotlib
 import pandas as pd
 
-matplotlib.use("Agg")  # headless-safe: figures are saved to disk, never shown
+matplotlib.use("Agg")  
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
@@ -18,9 +15,7 @@ CLEAN_FILE = DATA_DIR / "cleaned_student_data.csv"
 
 STRESS_MAP = {"low": 1, "moderate": 2, "medium": 2, "high": 3}
 
-# The five time-use columns add up to exactly 24 h for every student, so one
-# of them must be left out of any regression that has an intercept.
-# Social hours is the reference ("dropped") category throughout the project.
+
 HOUR_COLS = [
     "Study_Hours_Per_Day",
     "Sleep_Hours_Per_Day",
